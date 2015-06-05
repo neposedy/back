@@ -32,14 +32,6 @@
     "dataSource": "db",
     "public": false
   },
-  "car": {
-    "dataSource": "goose",
-    "public": true
-  },
-  "driver": {
-    "dataSource": "goose",
-    "public": true
-  },
   "draw": {
     "dataSource": "goose",
     "public": true
