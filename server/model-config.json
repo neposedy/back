@@ -35,5 +35,9 @@
   "draw": {
     "dataSource": "goose",
     "public": true
+  },
+  "result": {
+    "dataSource": "goose",
+    "public": true
   }
 }
