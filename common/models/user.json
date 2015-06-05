@@ -5,7 +5,11 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "isAnon": {
+      "type": "boolean"
+    }
+  },
   "validations": [],
   "relations": {},
   "acls": [
@@ -14,6 +18,13 @@
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "new_anon"
     }
   ],
   "methods": []
