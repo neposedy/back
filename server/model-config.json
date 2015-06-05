@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "goose",
     "public": false
   },
   "AccessToken": {
@@ -26,11 +26,11 @@
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "goose",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "goose",
     "public": false
   },
   "draw": {
@@ -42,7 +42,7 @@
     "public": true
   },
   "user": {
-    "dataSource": "db",
+    "dataSource": "goose",
     "public": true
   }
 }
