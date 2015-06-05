@@ -3,31 +3,34 @@ module.exports = function (app) {
   var Role = app.models.Role;
   var RoleMapping = app.models.RoleMapping;
 
-  function getOrCreateUser(username, password, email) {
-    User.find({where: {username: username}, limit: 1}, function (err, users) {
-      if (err) throw err;
-      if (users.length > 0) {
-        console.log('Found user ' + username + ', will not create any');
-        return users[0];
-      }
-      else {
-        User.create([
-          {username: username, email: email, password: password}
-        ], function (err, users) {
-          if (err) throw err;
-          console.log('Created user:', users);
-          return users[0];
-        });
-      }
+  function createUsersWithRole(role, users) {
+    users.forEach(function (user) {
+      User.find({where: {username: user.username}, limit: 1}, function (err, users) {
+        if (err) throw err;
+        if (users.length > 0) {
+          console.log('Found user ' + user.username + ', will not create any');
+          assignRoleToUser(role, users[0]);
+        }
+        else {
+          User.create([
+            {username: user.username, email: user.email, password: user.password}
+          ], function (err, users) {
+            if (err) throw err;
+            console.log('Created user:', users);
+            assignRoleToUser(role, users[0]);
+          });
+        }
+      });
+
     });
   }
 
-  function getOrCreateRole(name) {
+  function createRoleWithUsers(name, users) {
     Role.find({where: {name: name}, limit: 1}, function (err, roles) {
       if (err) throw err;
       if (roles.length > 0) {
         console.log('Found role ' + name + ', will not create any');
-        return roles[0];
+        createUsersWithRole(roles[0], users);
       }
       else {
         Role.create({
@@ -35,18 +38,17 @@ module.exports = function (app) {
         }, function (err, roles) {
           if (err) throw err;
           console.log('Created role:', roles);
-          return roles[0];
+          createUsersWithRole(roles[0], users);
         });
       }
     });
   }
 
-  function createPrincipal(role, user) {
-    role.principals.find({where: {principalId: user.id}, limit: 1}, function (err, principals) {
+  function assignRoleToUser(role, user) {
+    RoleMapping.find({where: {principalId: user.id}, limit: 1}, function (err, principals) {
       if (err) throw err;
       if (principals.length > 0) {
         console.log('Found pricipal for ' + user.username + ', will not create any');
-        return principals[0];
       }
       else {
         role.principals.create({
@@ -60,11 +62,7 @@ module.exports = function (app) {
     })
   }
 
-  var admin = getOrCreateUser('admin', 'admin', 'admin@noreply.com');
-  var adminRole = getOrCreateRole('admin');
-  //createPrincipal(adminRole, admin);
+  createRoleWithUsers('admin', [{username: 'admin', password: 'admin', email: 'admin@noreply.com'}]);
+  createRoleWithUsers('user', [{username: 'user', password: 'user', email: 'user@noreply.com'}]);
 
-  var user = getOrCreateUser('user', 'user', 'user@noreply.com');
-  var userRole = getOrCreateRole('user');
-  //createPrincipal(userRole, user);
 };
