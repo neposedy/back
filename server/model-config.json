@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "goose"
   },
   "AccessToken": {
     "dataSource": "db",
