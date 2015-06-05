@@ -5,19 +5,19 @@ module.exports = function (app) {
 
   function createUsersWithRole(role, users) {
     users.forEach(function (user) {
-      User.find({where: {username: user.username}, limit: 1}, function (err, users) {
+      User.findOne({where: {username: user.username}}, function (err, found_user) {
         if (err) throw err;
-        if (users.length > 0) {
+        if (found_user) {
           console.log('Found user ' + user.username + ', will not create any');
-          assignRoleToUser(role, users[0]);
+          assignRoleToUser(role, found_user);
         }
         else {
           User.create([
             {username: user.username, email: user.email, password: user.password}
-          ], function (err, users) {
+          ], function (err, new_users) {
             if (err) throw err;
-            console.log('Created user:', users);
-            assignRoleToUser(role, users[0]);
+            console.log('Created user:', new_users);
+            assignRoleToUser(role, new_users[0]);
           });
         }
       });
@@ -26,11 +26,11 @@ module.exports = function (app) {
   }
 
   function createRoleWithUsers(name, users) {
-    Role.find({where: {name: name}, limit: 1}, function (err, roles) {
+    Role.findOne({where: {name: name}}, function (err, role) {
       if (err) throw err;
-      if (roles.length > 0) {
+      if (role) {
         console.log('Found role ' + name + ', will not create any');
-        createUsersWithRole(roles[0], users);
+        createUsersWithRole(role, users);
       }
       else {
         Role.create({
@@ -45,9 +45,9 @@ module.exports = function (app) {
   }
 
   function assignRoleToUser(role, user) {
-    RoleMapping.find({where: {principalId: user.id}, limit: 1}, function (err, principals) {
+    RoleMapping.findOne({where: {principalId: user.id}}, function (err, principal) {
       if (err) throw err;
-      if (principals.length > 0) {
+      if (principal) {
         console.log('Found pricipal for ' + user.username + ', will not create any');
       }
       else {
