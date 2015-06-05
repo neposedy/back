@@ -7,10 +7,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "draw_id": {
-      "type": "string",
-      "required": true
-    },
     "duration": {
       "type": "number",
       "required": true
@@ -18,14 +14,21 @@
     "time_taken": {
       "type": "date",
       "required": true
-    },
-    "user_id": {
-      "type": "string",
-      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "draw": {
+      "type": "belongsTo",
+      "model": "draw",
+      "foreignKey": ""
+    },
+    "player": {
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": []
 }
