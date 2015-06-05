@@ -14,7 +14,8 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -38,6 +39,10 @@
   },
   "result": {
     "dataSource": "goose",
+    "public": true
+  },
+  "user": {
+    "dataSource": "db",
     "public": true
   }
 }
