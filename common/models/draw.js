@@ -1,20 +1,13 @@
 module.exports = function(Draw) {
 
-  var user = app.models.user;
-  Draw.get_new = function(user, level, cb) {
-    // move this to user. load the user somewhere
-    var userPlayed = [];
-    //Result.find(
-    //  {where: {playerId: user}},
-    //  function(err, results){
-    //    if(err) throw err;
-    //    if(results) {
-    //      // foreach result fill userPla
-    //    }
-    //  }
-    //);
+
+  Draw.new = function(user, level, cb) {
+    var app = Draw.app;
+    var user = app.models.user;
 
     Draw.findOne(
+      // TODO: nin recently played
+      // TODO: random game
       {where: {level: level}},
       function(err, draw){
         if (err) throw err;
@@ -23,7 +16,7 @@ module.exports = function(Draw) {
   }
 
   Draw.remoteMethod(
-    'get_new',
+    'new',
     {
       accepts: [
         {arg: 'user', type: 'string'},
