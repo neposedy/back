@@ -39,5 +39,9 @@
   "driver": {
     "dataSource": "goose",
     "public": true
+  },
+  "draw": {
+    "dataSource": "goose",
+    "public": true
   }
 }

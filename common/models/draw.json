@@ -1,22 +1,30 @@
 {
-  "name": "car",
-  "plural": "cars",
+  "name": "draw",
+  "plural": "draws",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "make": {
+    "numbers": {
+      "type": [
+        "number"
+      ],
+      "required": true
+    },
+    "show_positions": {
+      "type": [
+        "number"
+      ],
+      "required": true
+    },
+    "operation": {
       "type": "string",
       "required": true
     },
-    "model": {
+    "level": {
       "type": "string",
-      "required": true
-    },
-    "year": {
-      "type": "number",
       "required": true
     }
   },
